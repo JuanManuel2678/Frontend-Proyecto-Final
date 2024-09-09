@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Modal } from "./Modal";
+import { AuthContext } from "../context/AuthContext";
 
 export const User = () => {
   const [showModal, setShowModal] = useState(false);
-  //const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
-    <div className="w-[300px] h-full flex justify-center gap-2 items-center font-mono">
+    <div className="w-[100px] h-full flex justify-center gap-2 items-center font-mono">
       <figure className="">
         <img
           src="/img-1.jpg"
@@ -15,7 +16,7 @@ export const User = () => {
         />
       </figure>
 
-      <h1></h1>
+
 
       <button onClick={() => setShowModal(!showModal)} >
         {showModal ? (

@@ -26,16 +26,8 @@ export const Register = () => {
   const handleNewUser = async (e) => {
     e.preventDefault()
 
-    const data = {
-      nombres: e.target.nombres.value,
-      apellidos: e.target.apellidos.value,
-      piso: e.target.piso.value,
-      apartamento: e.target.apartamento.value,
-      telefono: e.target.telefono.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-      rol: e.target.rol.value
-    }
+    const data = Object.fromEntries(new FormData(e.target)) 
+    console.log(data)
     await create.mutateAsync(data)
     e.target.reset()
   }
@@ -55,24 +47,7 @@ export const Register = () => {
         className="w-[40%] h-[80%] p-5 rounded-lg bg-white "
       >
         <ul className="h-full flex flex-col gap-2 justify-between ">
-          <li className="flex items-center gap-2">
-            <figure>
-              <img
-                // src={`http://localhost:3000/api/users/image/${user?.image}`}
-                src=""
-                alt=""
-                className="size-[72px] rounded-lg"
-              />
-            </figure>
-            <label
-              htmlFor="image"
-              className="flex flex-col font-medium text-[13px] text-[#828282]"
-            >
-              {" "}
-              Suba una Foto
-              <input type="file" name="image" accept="image/*" />
-            </label>
-          </li>
+
           <li className="flex flex-col">
             <label htmlFor="nombres" className="font-medium text-[13px]">
               Nombres
@@ -120,22 +95,22 @@ export const Register = () => {
               className=" p-1 outline-none bg-transparent w-[15%]"
               id="apartamento" name="apartamento">
                 <option value="">Apto</option>
-                <option value="1">1 - A</option>
-                <option value="2">1 - B</option>
-                <option value="3">2 - A</option>
-                <option value="4">2 - B</option>
-                <option value="5">3 - A</option>
-                <option value="6">3 - B</option>
-                <option value="7">4 - A</option>
-                <option value="8">4 - B</option>
-                <option value="9">5 - A</option>
-                <option value="10">5 - B</option>
-                <option value="11">6 - A</option>
-                <option value="12">6 - B</option>
-                <option value="13">7 - A</option>
-                <option value="14">7 - B</option>
-                <option value="15">8 - A</option>
-                <option value="16">8 - B</option>
+                <option value="1 - A">1 - A</option>
+                <option value="1 - B">1 - B</option>
+                <option value="2 - A">2 - A</option>
+                <option value="2 - B">2 - B</option>
+                <option value="3 - A">3 - A</option>
+                <option value="3 - B">3 - B</option>
+                <option value="4 - A">4 - A</option>
+                <option value="4 - B">4 - B</option>
+                <option value="5 - A">5 - A</option>
+                <option value="5 - B">5 - B</option>
+                <option value="6 - A">6 - A</option>
+                <option value="6 - B">6 - B</option>
+                <option value="7 - A">7 - A</option>
+                <option value="7 - B">7 - B</option>
+                <option value="8 - A">8 - A</option>
+                <option value="8 - B">8 - B</option>
               </select>
           </li>
           <li className="flex flex-col ">
@@ -223,27 +198,15 @@ export const Register = () => {
               </div>
             </div>
           </li>
-          <li className="flex flex-col border-b border-black gap-2">
-            <legend className="font-medium text-[13px]">Rol</legend>
-            <div className="flex justify-between px-2">
-              <label htmlFor="residente" className="font-medium text-[13px] flex gap-1 pb-1">
-                <input
-                  id="residente"
-                  type="radio"
-                  name="residente-administrador"
-                  checked
-                />
-                residente
-              </label>
-              <label htmlFor="administrador flex gap-2" className="font-medium text-[13px] flex gap-1 pb-1">
-                <input
-                  id="administrador"
-                  type="radio"
-                  name="residente-administrador"
-                />
-                administrador
-              </label>
-            </div>
+          <li className="flex flex-col w-full border-b border-black">
+            <label htmlFor="rol" className="font-medium text-[13px]">
+              Rol
+            </label>
+            <select name="rol" id="rol" className=" p-1 outline-none bg-transparent w-[30%]">
+              <option value="administrador">administrador</option>
+              <option value="residente">residente</option>
+            </select>
+
           </li>
           <li className=" flex justify-center pt-2">
             <button

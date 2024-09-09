@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { Header } from "../component/Header"
 import { AuthContext } from "../context/AuthContext"
+import { Inicio } from "../component/Inicio"
 
 
 export const Dashboard = () => {
@@ -13,9 +14,8 @@ export const Dashboard = () => {
   return (
     <main className="w-screen h-screen  bg-[#E0E0E0] font-Roboto">
       <Header />
-      <div>
-        <h1>Bienvenido , {user?.nombres} {user?.apellidos}</h1>
-      </div>
+      <Inicio />
+ 
     </main>
   )
 }

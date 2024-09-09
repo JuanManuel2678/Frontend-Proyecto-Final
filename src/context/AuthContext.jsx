@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { createContext, useEffect, useState } from "react";
 import { createUser, getMe, loginUser } from "../services/authService";
 import { useLocation, useNavigate } from "react-router-dom";
+import { QueryClient } from "react-query";
 
 export const AuthContext = createContext()
 
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
         mutationKey: ['crate'],
         mutationFn: createUser,
         onError: data => alert(data.response?.data?.message),
-        onSuccess: ({ data }) => {
+        onSuccess: (data) => {
             alert(data.message)
             navigate('/dashboard')
         }

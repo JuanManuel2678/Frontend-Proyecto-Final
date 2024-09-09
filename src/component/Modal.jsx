@@ -12,7 +12,7 @@ export const Modal = ({ setShowModal }) => {
     };
 
   return (
-    <div className="w-[188px] h-[174px] border border-[#0f0f0f] bg-white rounded-xl flex flex-col justify-center gap-2  top-[80px] absolute p-2">
+    <div className="w-[188px] h-[174px] border border-[#0f0f0f] bg-white rounded-xl flex flex-col justify-center gap-2  top-[80px] right-[8px] absolute p-2">
       <button
         onClick={handleUser}
         className="flex p-2 w-full h-2/4 gap-2  hover:bg-slate-200 hover:rounded-lg items-center"

@@ -8,7 +8,6 @@ export const NvoUser = () => {
     <div className="w-screen h-screen  bg-[#E0E0E0] font-Roboto">
         <Header />
         <Register />
-      
     </div>
   )
 }

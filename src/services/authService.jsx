@@ -12,7 +12,7 @@ export const loginUser = async ({ email, password }) => {
 
 export const createUser = async (data) => {
   const newUse = await authAPI.post('/api/users', data)
-  return newUse.data
+  return newUse
 }
 
 export const getMe = async () => {
