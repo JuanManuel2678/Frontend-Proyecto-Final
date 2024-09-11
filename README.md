@@ -1,4 +1,4 @@
-Login email: juan_1@gmail.com clave: 123456789
+Login email: juan_m@gmail.com clave: Funval.2024
 
 # React + Vite
 
