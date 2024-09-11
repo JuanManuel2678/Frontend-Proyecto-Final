@@ -2,9 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 
-
 export const Login = () => {
-  const { login } = useContext(AuthContext)
+  const { login } = useContext(AuthContext);
 
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -37,13 +36,11 @@ export const Login = () => {
     }
 
     const data = {
-       email: e.target.email.value,
-       password: e.target.password.value
-    }
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
     await login.mutateAsync(data);
   };
-
- 
 
   return (
     <main className="w-screen h-screen flex justify-center items-center bg-[#E0E0E0] font-Roboto">
@@ -56,7 +53,10 @@ export const Login = () => {
             </span>
           </div>
 
-          <form className="h-[70%] flex flex-col justify-center gap-8 p-2" onSubmit={handleLogin}>
+          <form
+            className="h-[70%] flex flex-col justify-center gap-8 p-2"
+            onSubmit={handleLogin}
+          >
             <label className="w-full h-8 flex gap-2 items-center border-b border-black">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +76,7 @@ export const Login = () => {
                 type="email"
                 placeholder="email"
                 name="email"
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-[80%] pl-4 outline-none bg-transparent"
                 required
@@ -100,6 +101,7 @@ export const Login = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="password"
                 name="password"
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-[80%] pl-4 outline-none bg-transparent"
                 required
@@ -156,15 +158,18 @@ export const Login = () => {
             </div>
             <div className="w-full flex text-sm">
               <label className="w-full flex items-center gap-1">
-                <input 
-                type="checkbox" 
-                checked={rememberMe}
-                onChange={(e)=> setRememberMe(e.target.checked)}
-                className="size-4"
-                 />
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="size-4"
+                />
                 <p>Recuérdame</p>
               </label>
-              <Link to="/recuperar" className="whitespace-nowrap cursor-pointer underline underline-offset-2 text-blue-800 font-medium">
+              <Link
+                to="/recuperar"
+                className="whitespace-nowrap cursor-pointer underline underline-offset-2 text-blue-800 font-medium"
+              >
                 Olvidaste tu contraseña?
               </Link>
             </div>

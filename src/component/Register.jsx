@@ -206,7 +206,6 @@ export const Register = () => {
               <option value="administrador">administrador</option>
               <option value="residente">residente</option>
             </select>
-
           </li>
           <li className=" flex justify-center pt-2">
             <button

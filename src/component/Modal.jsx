@@ -10,6 +10,11 @@ export const Modal = ({ setShowModal }) => {
      setShowModal(false)
      navigate("/register");
     };
+  
+  const handleAllUsers = () => {
+    setShowModal(false)
+    navigate("/users")
+  }  
 
   return (
     <div className="w-[188px] h-[174px] border border-[#0f0f0f] bg-white rounded-xl flex flex-col justify-center gap-2  top-[80px] right-[8px] absolute p-2">
@@ -27,7 +32,7 @@ export const Modal = ({ setShowModal }) => {
         <h1 className="font-bold text-[14px] text-[#4f4f4f]">Crear</h1>
       </button>
       <button
-        onClick={() => setShowModal(false)}
+        onClick={handleAllUsers}
         className="flex p-2 w-full h-2/4 gap-2  hover:bg-slate-200 hover:rounded-lg items-center"
       >
         <figure>

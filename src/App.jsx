@@ -4,7 +4,8 @@ import { Dashboard } from "./pages/Dashboard";
 import ProtectedRoute from "./component/ProtectedRoute";
 import { Password } from "./pages/Password";
 import { NvoUser } from "./pages/NvoUser";
-import { Header } from "./component/Header";
+import { AllUsers } from "./pages/AllUsers";
+import { UpdateUSer } from "./pages/UpdateUSer";
 
 export default function App() {
   return (
@@ -12,6 +13,8 @@ export default function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/register"  element={<NvoUser />} />
+        <Route path="/users"   element={<AllUsers />} />
+        <Route path="/update" element={<UpdateUSer/>}/>
       </Route>
       <Route path="/" element={<LoginPage />} />
       <Route path="/recuperar" element={<Password />}/>

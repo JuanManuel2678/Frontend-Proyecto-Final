@@ -1,68 +1,99 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createContext, useEffect, useState } from "react";
-import { createUser, getMe, loginUser } from "../services/authService";
+import { createUser, getMe, loginUser, all, userDelete } from "../services/authService";
 import { useLocation, useNavigate } from "react-router-dom";
-import { QueryClient } from "react-query";
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [modal ,setModal] = useState(false)
-    const navigate = useNavigate()
-    const { pathname } = useLocation()
-    const [user, setUser] = useState(null)
-    const rutasIgnoradas = ["/", "/recuperar"]
+  const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [user, setUser] = useState(null);
+  const [userAll, setUserAll] = useState(null)
+  const rutasIgnoradas = ["/", "/recuperar"];
 
-    const login = useMutation({
-        mutationKey: ['login'],
-        mutationFn: loginUser,
-        onError: data => alert(data.response?.data?.message),
-        onSuccess: ({ data }) => {
-            localStorage.setItem('token', data.token)
-            setUser(data.user)
-            navigate('/dashboard')
-        }
-    })
+  const login = useMutation({
+    mutationKey: ["login"],
+    mutationFn: loginUser,
+    onError: (data) => alert(data.response?.data?.message),
+    onSuccess: ({ data }) => {
+      localStorage.setItem("token", data.token);
+      setUser(data.user);
+      navigate("/dashboard");
+    },
+  });
 
-    const create = useMutation({
-        mutationKey: ['crate'],
-        mutationFn: createUser,
-        onError: data => alert(data.response?.data?.message),
-        onSuccess: (data) => {
-            alert(data.message)
-            navigate('/dashboard')
-        }
-    })
+  const create = useMutation({
+    mutationKey: ["crate"],
+    mutationFn: createUser,
+    onError: (data) => alert(data.response?.data?.message),
+    onSuccess: (data) => {
+      alert(data.message);
+      navigate("/dashboard");
+    },
+  });
 
-    const { data, isLoading, isError } = useQuery({
-        queryKey: ['user'],
-        queryFn: getMe,
-        enabled: !rutasIgnoradas.includes(pathname),
-    });
+  const { data: users } = useQuery({
+    queryKey: ["users"],
+    queryFn: all
+  })
 
-    useEffect(() => {
-        if (data && !isLoading) {
-            setUser(data);
-        }
-    }, [data, isLoading]);
+   useEffect(() => {
+    setUserAll(users)
+}, [users])
+  
 
-    function logout() {
-        localStorage.removeItem('token')
-        localStorage.removeItem('id')
-        setUser(null)
-        navigate('/')
-        setModal(false)
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["user"],
+    queryFn: getMe,
+    enabled: !rutasIgnoradas.includes(pathname),
+  });
+
+  useEffect(() => {
+    if (data && !isLoading) {
+      setUser(data);
     }
+  }, [data, isLoading]);
 
-    function options() {
-        setModal(!modal)
-    }
+  function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
+    setUser(null);
+    navigate("/");
+    setModal(false);
+  }
 
-    
-    return (
-        <AuthContext.Provider value={{ user, login, isLoading, logout, options, isError, create}}>
-            {children}
-        </AuthContext.Provider>)
-}
+  const drop = useMutation({
+    mutationKey: ['deleteUser'],
+    mutationFn: userDelete,
+    onError: (data) => alert(data.response?.data?.message),
+    onSuccess: (data) => {
+      alert(data.message);
+    },
+  }) 
 
-// options, modal, Login, user, logout, isLoading, isError 
+  function options() {
+    setModal(!modal);
+  }
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        isLoading,
+        logout,
+        options,
+        isError,
+        create,
+        userAll,
+        drop
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+// options, modal, Login, user, logout, isLoading, isError

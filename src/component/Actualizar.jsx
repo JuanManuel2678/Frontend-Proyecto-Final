@@ -1,62 +1,58 @@
-import { useState } from "react";
-
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export const Actualizar = () => {
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('')
+  const { user } = useContext(AuthContext);
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    
+    const regex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*./])(?=.*\d)[A-Za-z\d!@#$%^&*./]{8,}$/;
+    
+    if (!regex.test(newPassword)) {
+      setError('La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un carácter especial y un numero .');
+    } else {
+      setError('');
+    }
+  };
 
   return (
     <main className="w-full h-[90%] flex flex-col justify-between items-center bg-[#E0E0E0] font-Roboto">
-            <h1 className="font-bold text-2xl text-left w-full h-[7%] p-3 text-white bg-black">
+      <h1 className="font-bold text-2xl text-left w-full h-[7%] p-3 text-white bg-black flex  items-center">
         Actualizar Datos{" "}
       </h1>
-      <h1>
-        Rellene los datos que desee modificar
-      </h1>
+      <h1>Rellene los datos que desee modificar</h1>
       <form
         //onSubmit={handleUpdate}
         className="w-[40%] h-[80%] p-5 rounded-lg bg-white "
       >
         <ul className="h-full flex flex-col gap-2 justify-between ">
-          <li className="flex items-center gap-2">
-            <figure>
-              <img
-                // src={`http://localhost:3000/api/users/image/${user?.image}`}
-                src=""
-                alt=""
-                className="size-[72px] rounded-lg"
-              />
-            </figure>
-            <label
-              htmlFor="image"
-              className="flex flex-col font-medium text-[13px] text-[#828282]"
-            >
-              {" "}
-              Suba una Foto
-              <input type="file" name="image" accept="image/*" />
-            </label>
-          </li>
           <li className="flex flex-col ">
-            <label htmlFor="name" className="font-medium text-[13px]">
+            <label htmlFor="nombres" className="font-medium text-[13px]">
               Nombres
             </label>
             <input
               className="border-b border-black p-1 outline-none bg-transparent"
               type="text"
-              id="name"
-              name="name"
-              placeholder="Nombres"
+              id="nombres"
+              name="nombres"
+              placeholder={user?.nombres}
             ></input>
           </li>
           <li className="flex flex-col">
-            <label htmlFor="lastname" className="font-medium text-[13px]">
+            <label htmlFor="apellidos" className="font-medium text-[13px]">
               Apellidos
             </label>
             <input
               className="border-b border-black p-1 outline-none bg-transparent"
               type="text"
-              id="lastname"
-              name="lastname"
-              placeholder="Apellidos"
+              id="apellidos"
+              name="apellidos"
+              placeholder={user?.apellidos}
             ></input>
           </li>
           <li className="flex flex-col">
@@ -68,37 +64,35 @@ export const Actualizar = () => {
               type="number"
               id="piso"
               name="piso"
-              placeholder="Piso"
               min={1}
               max={8}
+              value={user?.piso}
               readOnly
-              value="8"
             ></input>
           </li>
           <li className="flex flex-col">
-            <label htmlFor="apto" className="font-medium text-[13px]">
+            <label htmlFor="apartamento" className="font-medium text-[13px]">
               Apartamento
             </label>
             <input
               className="border-b border-black p-1 outline-none bg-transparent"
               type="text"
-              id="apto"
-              name="apto"
-              placeholder="Apartamento"
+              id="apartamento"
+              name="apartamento"
               readOnly
-              value='apartamento'
+              value={user?.apartamento}
             ></input>
           </li>
           <li className="flex flex-col ">
-            <label htmlFor="phone" className="font-medium text-[13px]">
+            <label htmlFor="telefono" className="font-medium text-[13px]">
               Teléfono
             </label>
             <input
               className="border-b border-black p-1 outline-none bg-transparent"
-              type="phone"
-              id="phone"
-              name="phone"
-              placeholder="Teléfono"
+              type="tel"
+              id="telefono"
+              name="telefono"
+              placeholder={user?.telefono}
             ></input>
           </li>
           <li className="flex flex-col">
@@ -110,7 +104,7 @@ export const Actualizar = () => {
               type="email"
               id="email"
               name="email"
-              value="Email@example.com"
+              value={user?.email}
               placeholder="email"
               readOnly
             ></input>
@@ -121,12 +115,17 @@ export const Actualizar = () => {
             </label>
             <div className="flex items-center gap-2 border-b border-black ">
               <input
-                className=" w-[95%] p-1 pl-4 bg-transparent outline-none"
+                className={`w-[95%] p-1 pl-4 outline-none bg-transparent rounded-md focus:outline-none focus:ring-2 ${
+                  error ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500 '
+                }`}
                 type={showPassword ? "text" : "password"}
-                id="password"
                 name="password"
-                placeholder="Enter your password"
+                value={password}
+                onChange={handlePasswordChange}
+                placeholder="Enter your Password"
+                required
               ></input>
+              {error && <p className="mt-2 text-red-500 text-sm">{error}</p>}
               <div
                 onClick={() => setShowPassword(!showPassword)}
                 className="cursor-pointer"
@@ -170,48 +169,25 @@ export const Actualizar = () => {
               </div>
             </div>
           </li>
+          <li className="flex flex-col w-full border-b border-black">
+            <label htmlFor="rol" className="font-medium text-[13px]">
+              Rol
+            </label>
+            <input name="rol" id="rol" value={user?.rol} readOnly className=" p-1 outline-none bg-transparent w-[30%]">
+            </input>
+          </li>
           <li className=" flex justify-center pt-2 gap-2">
-             <button
+            <button
               className="bg-black px-6 py-2 w-[180px] items-center rounded-md text-white font-medium text-[16px] hover:bg-slate-700 hover:border hover:border-black"
               type="submit"
             >
               Actualizar
             </button>
-            <button className="px-2 py-2 w-[110px] items-center border border-black rounded-md flex gap-2 font-bold text-white bg-black hover:bg-slate-700 hover:border hover:border-black">
-            Eliminar
-                <figure className="">
-                    <img src="/delete.svg" alt=""className="size-[24px]"/>
-                </figure>
-            </button>
-             
           </li>
         </ul>
-      </form> 
-
+      </form>
     </main>
-  )
-}
+  );
+};
 
 
-{/* <li className="flex flex-col border-b border-black gap-2">
-<legend className="font-medium text-[13px]">Rol</legend>
-<div className="flex justify-between px-2">
-  <label htmlFor="residente" className="font-medium text-[13px] flex gap-1 pb-1">
-    <input
-      id="residente"
-      type="radio"
-      name="tipo-cuenta"
-      checked
-    />
-    Residente
-  </label>
-  <label htmlFor="administrador flex gap-2" className="font-medium text-[13px] flex gap-1 pb-1">
-    <input
-      id="administrador"
-      type="radio"
-      name="tipo-cuenta"
-    />
-    Administrador
-  </label>
-</div>
-</li> */}

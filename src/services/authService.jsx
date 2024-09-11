@@ -22,3 +22,13 @@ export const getMe = async () => {
   });
   return info.data;
 };
+
+export const all = async () => {
+  const allUsers = await authAPI.get('/api/users/all')
+  return allUsers.data
+}
+
+export const userDelete = async (id) => {
+  const userDelete = await authAPI.delete(`/api/users/${id}}`)
+  return userDelete.data
+}
