@@ -5,7 +5,7 @@ export const Actualizar = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('')
-  const { user } = useContext(AuthContext);
+  const { user, updateUser } = useContext(AuthContext);
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
@@ -20,6 +20,17 @@ export const Actualizar = () => {
     }
   };
 
+  const handleUpdate = async (e) => {
+    e.preventDefault()
+    
+    const data = Object.fromEntries(new FormData(e.target))
+    const id = user.user_id
+    console.log(data)
+    
+    await updateUser.mutateAsync({data, id})
+    e.target.reset()
+  }
+
   return (
     <main className="w-full h-[90%] flex flex-col justify-between items-center bg-[#E0E0E0] font-Roboto">
       <h1 className="font-bold text-2xl text-left w-full h-[7%] p-3 text-white bg-black flex  items-center">
@@ -27,7 +38,7 @@ export const Actualizar = () => {
       </h1>
       <h1>Rellene los datos que desee modificar</h1>
       <form
-        //onSubmit={handleUpdate}
+        onSubmit={handleUpdate}
         className="w-[40%] h-[80%] p-5 rounded-lg bg-white "
       >
         <ul className="h-full flex flex-col gap-2 justify-between ">
@@ -123,7 +134,6 @@ export const Actualizar = () => {
                 value={password}
                 onChange={handlePasswordChange}
                 placeholder="Enter your Password"
-                required
               ></input>
               {error && <p className="mt-2 text-red-500 text-sm">{error}</p>}
               <div

@@ -2,13 +2,22 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export const Usuarios = () => {
-  const { userAll, drop } = useContext(AuthContext);
+  const { userAll, drop, update } = useContext(AuthContext);
   console.log(userAll);
 
   const handleDelete = async (id) => {
-    console.log(id);
+    console.log(id)
     try {
       await drop.mutateAsync(id);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleUpdate = async (id) => {
+    console.log(id)
+    try {
+      await update.mutateAsync(id);
     } catch (error) {
       console.error("Error deleting user:", error);
     }
@@ -16,7 +25,7 @@ export const Usuarios = () => {
 
   return (
     <main className="w-full h-[90%] flex flex-col justify-between items-center bg-[#E0E0E0] font-Roboto">
-      <h1 className="font-bold text-2xl text-left w-full h-[7%] p-3 text-white bg-black">
+      <h1 className="font-bold text-2xl text-left w-full h-[7%] p-3 text-white bg-black flex items-center">
         Todos los Usuarios{" "}
       </h1>
 
@@ -48,9 +57,9 @@ export const Usuarios = () => {
             </tr>
           </thead>
           <tbody>
-            {userAll?.map((item) => (
+            {userAll?.map((item, index) => (
               <tr
-                key={item.user_id}
+                key={index}
                 className="border-b border-gray-200 hover:bg-gray-50"
               >
                 <td className="py-2 px-4 text-gray-800">{item.nombres}</td>
@@ -58,13 +67,11 @@ export const Usuarios = () => {
                 <td className="py-2 px-4 text-gray-800">{item.email}</td>
                 <td className="py-2 px-4 text-gray-800">{item.telefono}</td>
                 <td className="py-2 px-4 text-gray-800">{item.apartamento}</td>
-                <td className="py-2 px-4 font-bold text-blue-800 uppercase text-sm">
-                  {item.rol}
-                </td>
+                <td className="py-2 px-4 font-bold text-blue-800 uppercase text-sm">{item.rol}</td>
                 <td className="py-2 px-4 text-center">
                   <div className="flex gap-1">
                     <button
-                      onClick={() => handleDelete(item.id)}
+                      onClick={() => handleDelete(item.user_id)}
                       className="px-2 py-2 w-[40px] items-center border border-black rounded-md flex gap-2 font-bold text-white bg-black hover:bg-slate-700 hover:border hover:border-black"
                     >
                       <figure className="">
@@ -72,7 +79,7 @@ export const Usuarios = () => {
                       </figure>
                     </button>
                     <button
-                      onClick={() => handleDelUs(item.id)}
+                      onClick={() => handleUpdate(item.user_id)}
                       className="px-2 py-2 w-[40px] items-center border border-black rounded-md flex gap-2 font-bold text-white bg-black hover:bg-slate-700 hover:border hover:border-black"
                     >
                       <figure className="">

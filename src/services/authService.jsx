@@ -29,6 +29,13 @@ export const all = async () => {
 }
 
 export const userDelete = async (id) => {
-  const userDelete = await authAPI.delete(`/api/users/${id}}`)
+  const userDelete = await authAPI.delete(`/api/users/${id}`)
   return userDelete.data
+}
+
+export const upUser = async ({data, id}) => {
+  const upUser = await authAPI.patch(`/api/users/${id}`, data)
+  console.log(upUser)
+  return upUser.data
+
 }

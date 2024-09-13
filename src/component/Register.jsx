@@ -36,7 +36,7 @@ export const Register = () => {
 
   return (
     <main className="w-full h-[90%] flex flex-col justify-between items-center bg-[#E0E0E0] font-Roboto">
-      <h1 className="font-bold text-2xl text-left w-full h-[7%] p-3 text-white bg-black">
+      <h1 className="font-bold text-2xl text-left w-full h-[7%] p-3 text-white bg-black flex items-center">
         Nuevo registro{" "}
       </h1>
       <h1>

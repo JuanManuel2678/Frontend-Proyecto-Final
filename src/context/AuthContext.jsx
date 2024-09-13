@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createContext, useEffect, useState } from "react";
-import { createUser, getMe, loginUser, all, userDelete } from "../services/authService";
+import { createUser, getMe, loginUser, all, userDelete, upUser} from "../services/authService";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     onError: (data) => alert(data.response?.data?.message),
     onSuccess: (data) => {
       alert(data.message);
-      navigate("/dashboard");
+      navigate("/users");
     },
   });
 
@@ -64,6 +64,16 @@ export const AuthProvider = ({ children }) => {
     setModal(false);
   }
 
+  const updateUser = useMutation({
+    mutationKey: ['update'],
+    mutationFn: upUser,
+    onError: (data, id) => alert(data.response?.data?.message),
+    onSuccess: (data, id) => {
+      alert(data.message)
+      navigate('/users')
+    }
+  })
+
   const drop = useMutation({
     mutationKey: ['deleteUser'],
     mutationFn: userDelete,
@@ -72,6 +82,8 @@ export const AuthProvider = ({ children }) => {
       alert(data.message);
     },
   }) 
+
+
 
   function options() {
     setModal(!modal);
@@ -88,7 +100,8 @@ export const AuthProvider = ({ children }) => {
         isError,
         create,
         userAll,
-        drop
+        drop,
+        updateUser
       }}
     >
       {children}
