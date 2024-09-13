@@ -1,7 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createContext, useEffect, useState } from "react";
-import { createUser, getMe, loginUser, all, userDelete, upUser} from "../services/authService";
+import { createUser, getMe, loginUser, all, userDelete, upUser, createIncident, getAllIncident} from "../services/authService";
 import { useLocation, useNavigate } from "react-router-dom";
+
 
 export const AuthContext = createContext();
 
@@ -11,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const { pathname } = useLocation();
   const [user, setUser] = useState(null);
   const [userAll, setUserAll] = useState(null)
+  const [allIncident, setAllIncident] = useState(null)
   const rutasIgnoradas = ["/", "/recuperar"];
 
   const login = useMutation({
@@ -43,6 +45,14 @@ export const AuthProvider = ({ children }) => {
     setUserAll(users)
 }, [users])
   
+const { data: incidencias } = useQuery({
+  queryKey: ["incidencias"],
+  queryFn: getAllIncident
+})
+
+ useEffect(() => {
+  setAllIncident(incidencias)
+}, [incidencias])
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["user"],
@@ -83,6 +93,16 @@ export const AuthProvider = ({ children }) => {
     },
   }) 
 
+  const incidence = useMutation({
+    mutationKey: ['incidence'],
+    mutationFn: createIncident,
+    onError: (data) => alert(data.response?.data?.message),
+    onSuccess: (data) => {
+      alert(data.message)
+      navigate('/allincidencias')
+    }
+  })
+
 
 
   function options() {
@@ -101,7 +121,8 @@ export const AuthProvider = ({ children }) => {
         create,
         userAll,
         drop,
-        updateUser
+        updateUser,
+        allIncident
       }}
     >
       {children}

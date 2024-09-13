@@ -1,15 +1,12 @@
-
 import { Header } from "../component/Header"
-import { NvaIncIdencias } from "../component/NvaIncIdencias"
+import { TodasIncidencias } from "../component/TodasIncidencias"
 
-
-export const CreateIncidencia = () => {
-
+export const AllIncidence = () => {
   return (
     <div className="w-screen h-screen  bg-[#E0E0E0] font-Roboto">
         <Header />
-        <NvaIncIdencias />
-        
+        <TodasIncidencias />
+      
     </div>
   )
 }

@@ -11,13 +11,17 @@ export const Navbar = () => {
         </button>
           </Link>
 
-        <button className="hover:border-b-[2px] hover:border-b-black focus:border-b-[2px] focus:border-b-black cursor-pointer h-full content-center uppercase font-bold">
+          <Link to='/incidencia' className="h-full">
+          <button className="hover:border-b-[2px] hover:border-b-black focus:border-b-[2px] focus:border-b-black cursor-pointer h-full content-center uppercase font-bold">
           Incidencias
         </button>
+          </Link>
 
-        <button className="hover:border-b-[2px] hover:border-b-black focus:border-b-[2px] focus:border-b-black cursor-pointer h-full content-center uppercase font-bold">
+          <Link to="/allincidencias" className="h-full">
+          <button className="hover:border-b-[2px] hover:border-b-black focus:border-b-[2px] focus:border-b-black cursor-pointer h-full content-center uppercase font-bold">
           Mis Incidencias
         </button>
+          </Link>
       </div>
     </nav>
   );

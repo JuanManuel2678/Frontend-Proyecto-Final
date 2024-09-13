@@ -6,6 +6,8 @@ import { Password } from "./pages/Password";
 import { NvoUser } from "./pages/NvoUser";
 import { AllUsers } from "./pages/AllUsers";
 import { UpdateUSer } from "./pages/UpdateUSer";
+import { CreateIncidencia } from "./pages/CreateIncidencia";
+import { AllIncidence } from "./pages/AllIncidence";
 
 export default function App() {
   return (
@@ -15,6 +17,8 @@ export default function App() {
         <Route path="/register"  element={<NvoUser />} />
         <Route path="/users"   element={<AllUsers />} />
         <Route path="/update" element={<UpdateUSer/>}/>
+        <Route path='/incidencia' element={<CreateIncidencia />}/>
+        <Route path='/allincidencias' element={<AllIncidence />}/>
       </Route>
       <Route path="/" element={<LoginPage />} />
       <Route path="/recuperar" element={<Password />}/>

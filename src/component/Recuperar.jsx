@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
+
 export const Recuperar = () => {
+  
   return (
     <main className="w-screen h-screen flex justify-center items-center bg-[#E0E0E0] font-Roboto">
       <div className=" size-[60%] rounded-lg flex bg-[#f5f5f5] p-10 ">

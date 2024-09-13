@@ -39,3 +39,13 @@ export const upUser = async ({data, id}) => {
   return upUser.data
 
 }
+
+export const createIncident = async(data) => {
+  const incidencia = await authAPI.post('/api/incidence', data)
+  return incidencia
+}
+
+export const getAllIncident = async (data) => {
+  const allIn = await authAPI.get('/api/incidence/all')
+  return allIn.data
+}
